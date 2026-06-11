@@ -1,5 +1,6 @@
 import os
-import google.genai as genai
+from google.genai import types
+from google import genai
 from dotenv import load_dotenv
 
 # def setup_client():
@@ -11,7 +12,7 @@ if not api_key:
         raise ValueError("Missing GOOGLE_API_KEY in .env file!")
 
     # Configure
-genai.configure(api_key=api_key)
+client = genai.Client(api_key=api_key)
 
 # 3. Initialize the model
 identity=""" 
@@ -24,12 +25,13 @@ CONSTRAINS:
 - keep your answer concise and technical."""
 
 
-model = genai.GenerativeModel(
-    model_name='gemini-1.1-flash-;ite',
-    system_instruction=identity
+response= client.models.generate_content(
+    model='gemini-3.1-flash-lite',
+    content= "How do i make a sandwitch?",
+    config= types.GenerateContentConfig(
+        system_instruction=identity
+        )
 )
 
 
-# test identiy
-response=model.generate_content("How do i make sandwich?")
-print(f"Agent Response: {response.text}")
+print("Agent Response: {response.text}")
