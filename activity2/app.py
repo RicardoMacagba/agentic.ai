@@ -17,7 +17,7 @@ def autonomous_planner(goal):
     print("-" * 30)
     
     steps_taken = 0
-    max_steps = 3
+    max_steps = 5
     plan = []
     
     while steps_taken < max_steps:
