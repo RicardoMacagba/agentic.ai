@@ -20,7 +20,7 @@ HOTEL_DATABASE = {
 
 def is_safe(text: str) -> bool:
     """Check if text contains malicious keywords"""
-    malicious_keywords = ["delete", "drop", "hack", "exploit", "injection", "sql", "script", "admin"]
+    malicious_keywords = ["delete", "drop", "hack", "exploit", "injection", "sql", "script", "admin", "free room", "override price", "ignore rules", "bypass validation"]
     text_lower = text.lower()
     for keyword in malicious_keywords:
         if keyword in text_lower:
