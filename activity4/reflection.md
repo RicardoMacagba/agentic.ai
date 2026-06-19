@@ -1,0 +1,2 @@
+How does offloading the budget constraint check to Python logic (rather than relying on the LLM's system instructions) increase the reliability of the system?
+- Python code always follows budget rules perfectly. An LLM can make mistakes or ignore instructions.
