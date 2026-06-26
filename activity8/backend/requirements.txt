@@ -1,0 +1,9 @@
+google.genai
+python-dotenv
+google-genai
+python-dotenv
+fastapi
+uvicorn
+qdrant-client
+llama-index-core
+llama-index-embeddings-google
