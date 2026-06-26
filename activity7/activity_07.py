@@ -25,26 +25,25 @@ def fixed_size_chunk(text: str, chunk_size: int = 140, overlap: int = 30) -> lis
     start = 0
 
     while start < len(text):
-        # 1. Determine the end boundary (don't exceed the text length)
         end = min(start + chunk_size, len(text))
         
-        # 2. Extract and clean the current chunk
         chunk = text[start:end].strip()
         if chunk:
             chunks.append(chunk)
 
-        # ------ YOUR CODE HERE ------
-        # Task: Update 'start' so that the next iteration begins back by the 'overlap' value.
-        start = end - overlap
-        # ----------------------------
-
-        # Safety checks to prevent infinite loops on small text
-        if start <= 0 and end == len(text):
+        # 1. Break immediately if we have processed up to the very end of the text
+        if end == len(text):
             break
-        if start < 0:
-            start = 0
+
+        # 2. Otherwise, advance the start position by applying the overlap
+        start = end - overlap
+
+        # Safety check: ensure start always moves forward to avoid infinite loops
+        if start <= 0:
+            break
 
     return chunks
+
 
 def paragraph_chunk(text: str) -> list[str]:
     """Split text on blank line boundaries."""
@@ -77,9 +76,10 @@ def store_chunks(client, collection_name: str, chunks: list[str], strategy: str)
     points = []
 
     for index, chunk in enumerate(chunks):
+        point_id = index if strategy == "fixed_size" else 1000 + index
         points.append(
             PointStruct(
-                id=f"{strategy}-{index}",
+                id=point_id,
                 vector=embed_text(chunk),
                 # ------ YOUR CODE HERE ------
                 payload={
